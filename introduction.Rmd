@@ -21,12 +21,26 @@ ovarian.surv<- survfit(S1~1, ovarian)
 summary(ovarian.surv)
 plot(ovarian.surv,xlab="t",ylab=expression(hat(S)*"(t)"), lty=2:3)
 
-##
+##Exponential
 #h(t) = l, S(t) = exp(-lt)
 #l = exp(-(intercept))
-s2<-survreg(S1~1  , ovarian, dist='exponential')
-summary(s2)
-lambda <- coefficients(s2)[['(Intercept)']]
-T_survival <- seq(0, 1206, by=0.1)
-lines(T_survival,1-pexp(T_survival,exp(-lambda)),xlab="t",ylab=expression(hat(S)*"(t)"))
+ovarian.exp<-survreg(S1~1  , ovarian, dist='exponential')
+summary(ovarian.exp)
+intercept <- coefficients(ovarian.exp)[['(Intercept)']]
+lambda <- exp(-intercept)
+T_survival <- seq(0, 1210, by=0.1)
+lines(T_survival,1-pexp(T_survival,lambda),xlab="t",ylab=expression(hat(S)*"(t)"), col='blue')
+
+##Weibull
+#h(t) = a*y*t^(y-1), S(t) = exp(-at^y)
+#a = exp(-(intercept)y)
+#y = 1/scale
+ovarian.wei<-survreg(S1~1  , ovarian, dist='weibull',scale=0)
+summary(ovarian.wei)
+intercept <- coefficients(ovarian.wei)[['(Intercept)']]
+scale <- ovarian.wei$scale
+gamma <- 1/scale
+T_survival <- seq(0, 1210, by=0.1)
+lines(T_survival,1-pweibull(T_survival,gamma,exp(intercept)),xlab="t",ylab=expression(hat(S)*"(t)"), col='red')
+legend(0, 0.4, legend=c("No Dist", "Exponential", "Weibull"), lty = c(1,1,1), col = c('black', 'blue', 'red'))
 ```
