@@ -1,0 +1,32 @@
+---
+title: "introduction"
+author: "Paidamoyo Chapfuwa"
+date: "1/30/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ovarian Cancer Survival Analysis
+
+
+```{r}
+library(survival)
+data(ovarian)
+head(ovarian)
+S1 <- Surv(ovarian$futime, ovarian$fustat)
+ovarian.surv<- survfit(S1~1, ovarian)
+summary(ovarian.surv)
+plot(ovarian.surv,xlab="t",ylab=expression(hat(S)*"(t)"), lty=2:3)
+
+##
+#h(t) = l, S(t) = exp(-lt)
+#l = exp(-(intercept))
+s2<-survreg(S1~1  , ovarian, dist='exponential')
+summary(s2)
+lambda <- coefficients(s2)[['(Intercept)']]
+T_survival <- seq(0, 1206, by=0.1)
+lines(T_survival,1-pexp(T_survival,exp(-lambda)),xlab="t",ylab=expression(hat(S)*"(t)"))
+```
