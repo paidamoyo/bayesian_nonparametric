@@ -1,0 +1,45 @@
+---
+title: "deep_survival_analysis"
+author: "Paidamoyo Chapfuwa"
+date: "1/30/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Deep Survival Analysis : EHR
+* Item 1
+* Item 2
+    + Item 2a
+    + Item 2b
+* Hierachichal Generative Approach
+  + survival times and covariates modeled jointly conditional on latent processes
+  + records align by failure time rather than entry time
+  + Each observation has L layers of latent variables
+* (t,c) pairs of positive times and binary censoring status
+* Limitations to traditional approches( Cox & Kaplan Meir)
+  + EHR highdimensinal and sparse (missing covariates)
+  + Traditional methods require aligning all patiets on a synchronizing event(i.e entry to clinical trial)
+  + Regression based approaches assume linear function
+
+```{r}
+#lamda  scale
+# k shape 
+# mean = 
+# t time to failure
+lambda <- 10
+t <- seq(0, 20, by=0.1)
+
+weibul <- function(k) {
+  return(k/ lambda * (t/ lambda) ^ (k-1)  * exp(-(t/lambda) ^k))
+}
+
+plot(t, weibul(10), main = 'weibul distribution',  xlab='t', ylab = '', type='l')
+lines(weibul(1), col='blue')
+lines(weibul(0.1), col='red')
+legend(15, 0.3, legend=c("K=10", "K=1", "K=0.1"), lty = c(1,1,1), col = c('black', 'blue', 'red') )
+
+```
+

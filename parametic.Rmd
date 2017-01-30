@@ -1,5 +1,5 @@
 ---
-title: "introduction"
+title: "Parametic"
 author: "Paidamoyo Chapfuwa"
 date: "1/30/2017"
 output: pdf_document
@@ -42,5 +42,5 @@ scale <- ovarian.wei$scale
 gamma <- 1/scale
 T_survival <- seq(0, 1210, by=0.1)
 lines(T_survival,1-pweibull(T_survival,gamma,exp(intercept)),xlab="t",ylab=expression(hat(S)*"(t)"), col='red')
-legend(0, 0.4, legend=c("No Dist", "Exponential", "Weibull"), lty = c(1,1,1), col = c('black', 'blue', 'red'))
+legend(0, 0.4, legend=c("KaplanMeier", "Exponential", "Weibull"), lty = c(1,1,1), col = c('black', 'blue', 'red'))
 ```
