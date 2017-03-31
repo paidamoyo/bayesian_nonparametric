@@ -1,2 +1,2 @@
-# survival-analysis
-Experiment with Survival Analysis Models
+# bayesian_non_parametic
+Experiment with Edward and bayesian non parametic models
